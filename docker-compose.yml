@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: bnj-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+  backend:
+    build: ./text-analyzer-api
+    container_name: bnj-backend
+    ports:
+      - "3100:3100"
+    env_file:
+      - ./text-analyzer-api/.env
+    environment:
+      - MONGO_HOST=mongodb
+    depends_on:
+      - mongodb
+    restart: always
+
+  frontend:
+    build: ./text-analyzer-front
+    container_name: bnj-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  mongo_data:

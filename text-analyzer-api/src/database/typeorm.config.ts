@@ -2,8 +2,8 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'mongodb',
-  url: 'mongodb://localhost:27017',
-  database: 'text_analyzer',
+  url: `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`,
+  database: process.env.MONGO_DB,
   autoLoadEntities: true,
   synchronize: true,
 };
