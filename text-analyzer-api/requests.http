@@ -1,0 +1,10 @@
+## Analyzer
+POST http://localhost:3000/api/analyze
+Content-Type: application/json
+
+{
+  "text": "mon texte à analyser"
+}
+
+### History
+GET http://localhost:3000/api/history
