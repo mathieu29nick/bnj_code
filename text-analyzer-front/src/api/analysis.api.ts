@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3100/api';
+const API_URL = 'https://bnj-code.onrender.com/api';
 
 export const analyzeText = async (text: string) => {
   const res = await fetch(`${API_URL}/analyze`, {
