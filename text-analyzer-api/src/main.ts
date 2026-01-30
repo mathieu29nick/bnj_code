@@ -7,9 +7,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   app.enableCors({
-    origin: 'https://text-anaylez-front.vercel.app',
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type'],
+    origin: [
+      'https://text-anaylez-front.vercel.app',
+    ],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: false,
   });
 
   app.useGlobalPipes(
