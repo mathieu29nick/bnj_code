@@ -1,5 +1,5 @@
 ## Analyzer
-POST http://localhost:3000/api/analyze
+POST http://localhost:3100/api/analyze
 Content-Type: application/json
 
 {
@@ -7,4 +7,4 @@ Content-Type: application/json
 }
 
 ### History
-GET http://localhost:3000/api/history
+GET http://localhost:3100/api/history
