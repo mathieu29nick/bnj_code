@@ -4,20 +4,19 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  
-  const server = app.getHttpAdapter().getInstance();
-  server.set('trust proxy', 1);
-  
-  app.enableCors({
-    origin: true,
-    credentials: false,
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: true,
+      methods: '*',
+      allowedHeaders: '*',
+      credentials: false,
+    },
   });
 
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      forbidNonWhitelisted: true,
+      forbidNonWhitelisted: false,
       transform: true,
     }),
   );
