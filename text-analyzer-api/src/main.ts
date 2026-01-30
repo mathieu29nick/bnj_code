@@ -1,24 +1,28 @@
-import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import express from 'express';
+
+let cachedServer;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type'],
-  });
+  if (!cachedServer) {
+    const server = express();
+    const app = await NestFactory.create(
+      AppModule,
+      new ExpressAdapter(server),
+    );
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
-  await app.listen(process.env.PORT ?? 3100);
+    app.enableCors({ origin: '*' });
+
+    await app.init();
+    cachedServer = server;
+  }
+
+  return cachedServer;
 }
-bootstrap();
+
+export default async (req, res) => {
+  const server = await bootstrap();
+  server(req, res);
+};
