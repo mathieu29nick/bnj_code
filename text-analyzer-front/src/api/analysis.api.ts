@@ -1,4 +1,4 @@
-const API_URL = 'https://bnj-code.onrender.com/api';
+const API_URL = process.env.REACT_APP_API_URL!;
 
 export const analyzeText = async (text: string) => {
   const res = await fetch(`${API_URL}/analyze`, {
